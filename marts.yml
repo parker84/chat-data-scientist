@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_users
+    description: One row per user, including various user dimenions. Note this also includes users that have signed up, but haven't subscribed yet (you may want to filter these out depening on your use case).
+    columns: 
+      - name: user_id
+        description: uniquely identifies a user
+        tests:
+          - not_null
+          - unique
+      - name: stan_customer_status
+        description: the status of the user's subscription
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ["Active Customer", "Active Trial", "Churned Customer", "Churned Trial", "Never Trial"]
+  - name: fct_accumulating_users
+    description: One row per user, including various facts about the user.
+    columns: 
+      - name: user_id
+        description: uniquely identifies a user
+        tests:
+          - not_null
+          - unique
